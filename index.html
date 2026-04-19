@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login • Instagram</title>
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<style>
+
+html{height:100%}
+
+body{
+background:#fafafa;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+/* LOGIN BOX */
+.login{
+background:#fff;
+border:1px solid rgb(236,234,234);
+height:410px;
+margin:30px auto 0;
+width:400px;
+text-align:center;
+}
+
+.login h1{
+margin:20px 0 30px;
+}
+
+/* INPUTS */
+input[type="text"],
+input[type="password"]{
+background:#fafafa;
+border:1px solid rgb(236,234,234);
+border-radius:3px;
+height:39px;
+margin-top:10px;
+padding:10px;
+font-size:13px;
+width:320px;
+}
+
+input:focus{
+outline:0;
+border:1px solid #a1a1a1;
+}
+
+/* BUTTON */
+input[type="submit"]{
+background:#3897F0;
+border:0;
+border-radius:4px;
+color:#fff;
+font-weight:600;
+height:30px;
+margin-top:15px;
+width:320px;
+cursor:pointer;
+}
+
+input[type="submit"]:hover{
+background:#3090e9;
+}
+
+/* DIVIDER */
+.divider{
+overflow:hidden;
+text-align:center;
+color:#a5a4a4;
+font-size:13px;
+font-weight:500;
+margin:20px auto;
+width:320px;
+}
+
+.divider:before,
+.divider:after{
+background:#e0dddd;
+content:"";
+display:inline-block;
+height:1px;
+vertical-align:middle;
+width:50%;
+}
+
+.divider:before{margin-right:10px;}
+.divider:after{margin-left:10px;}
+
+.fbwrapper{margin-top:20px;}
+.fb a{
+font-weight:600;
+font-size:14px;
+text-decoration:none;
+color:#6b6a6a;
+}
+
+.forgotwrapper{margin-top:25px;}
+.forgot a{
+text-decoration:none;
+color:#6b6a6a;
+font-size:13px;
+}
+
+/* INFO BOX */
+.infobox{
+background:#fff;
+border:1px solid rgb(236,234,234);
+height:60px;
+margin:10px auto;
+width:400px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.infobox a{
+color:#5ea3f3;
+text-decoration:none;
+font-weight:600;
+}
+
+/* SHAKE ANIMATION */
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-5px);}
+50%{transform:translateX(5px);}
+75%{transform:translateX(-5px);}
+100%{transform:translateX(0);}
+}
+
+.shake{
+animation:shake .3s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login">
+
+<h1>
+<img src="https://freelogopng.com/images/all_img/1658587465instagram-name-logo.png"
+width="200">
+</h1>
+
+<form onsubmit="return checkLogin(event)">
+
+<input id="username"
+placeholder="Phone number, username, or email"
+type="text">
+
+<input id="password"
+placeholder="Password"
+type="password">
+
+<input type="submit" value="Log In">
+
+</form>
+
+<div class="divider"><b>OR</b></div>
+
+<div class="fbwrapper">
+<div class="fb">
+<a href="#">Log in with Facebook</a>
+</div>
+</div>
+
+<div class="forgotwrapper">
+<div class="forgot">
+<a href="#">Forgot password?</a>
+</div>
+</div>
+
+</div>
+
+<div class="infobox">
+<p>Don't have an account? <a href="#">Sign up</a></p>
+</div>
+
+
+<script>
+
+    function checkLogin(event){
+    event.preventDefault();
+    
+    const correctUser = "1stanniv";
+    const correctPass = "0421";
+    
+    const userInput = document.getElementById("username");
+    const passInput = document.getElementById("password");
+    
+    const user = userInput.value.trim();
+    const pass = passInput.value.trim();
+    
+    if(user === correctUser && pass === correctPass){
+    
+    // ✅ automatic redirect (no alert)
+    window.location.href = "profile.html";
+    
+    }else{
+    
+    // ❌ wrong credentials → shake inputs
+    userInput.classList.add("shake");
+    passInput.classList.add("shake");
+    
+    setTimeout(()=>{
+    userInput.classList.remove("shake");
+    passInput.classList.remove("shake");
+    },300);
+    
+    }
+    
+    return false;
+    }
+    
+    </script>
+</body>
+</html>
