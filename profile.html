@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>It's a Yes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --black:#111;
+  --gray-dark:#444;
+  --gray-mid:#888;
+  --gray-light:#d4d4d4;
+  --gray-soft:#f0f0f0;
+  --white:#fff;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#e0e0e0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* ── PROFILE CARD ── */
+.profile-container{
+  width:340px;
+  background:var(--white);
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 2px 24px rgba(0,0,0,.10);
+}
+
+.nav{
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--gray-soft);
+  padding-bottom:11px;font-size:13px;color:var(--gray-mid);
+}
+.nav h2{font-size:14px;font-weight:700;color:var(--black);letter-spacing:.8px;}
+
+.profile-header{display:flex;margin:14px 0;}
+
+.profile-pic img{
+  width:78px;height:78px;border-radius:50%;
+  margin-right:14px;object-fit:cover;
+  border:2px solid var(--gray-light);
+}
+
+.profile-stats{display:flex;justify-content:space-between;flex:1;align-items:center;}
+.profile-stats div{text-align:center;}
+.profile-stats span{font-weight:700;font-size:16px;display:block;color:var(--black);}
+.profile-stats p{font-size:10px;color:var(--gray-mid);margin-top:1px;}
+
+.bio{font-size:.78rem;margin:6px 0 12px;line-height:1.65;color:var(--gray-dark);}
+.bio strong{color:var(--black);font-weight:700;}
+
+.buttons{display:flex;gap:8px;}
+.buttons button{
+  flex:1;padding:8px;border:1.5px solid var(--gray-light);
+  border-radius:9px;background:var(--white);
+  color:var(--black);font-family:'DM Sans',sans-serif;
+  font-weight:600;font-size:12px;cursor:pointer;
+  transition:background .18s,border-color .18s;
+}
+.buttons button:hover{background:var(--gray-soft);border-color:var(--gray-mid);}
+
+/* ── HIGHLIGHTS ── */
+.highlights{display:flex;justify-content:space-around;margin-top:16px;}
+.highlight{text-align:center;cursor:pointer;}
+.highlight-ring{
+  width:64px;height:64px;border-radius:50%;
+  border:1.5px solid var(--gray-light);
+  padding:2px;margin:0 auto 5px;
+  transition:border-color .18s;
+}
+.highlight:hover .highlight-ring{border-color:var(--black);}
+.highlight img{
+  width:100%;height:100%;border-radius:50%;
+  border:2px solid var(--white);object-fit:cover;
+}
+.highlight p{font-size:.6rem;color:var(--gray-dark);width:68px;margin:0 auto;font-weight:500;}
+
+/* ── MODAL OVERLAY ── */
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;justify-content:center;align-items:center;
+  z-index:999;backdrop-filter:blur(4px);
+}
+.modal.active{display:flex;}
+
+.modal-content{
+  background:var(--white);
+  width:320px;max-height:88vh;overflow:auto;
+  padding:22px 18px 18px;border-radius:20px;
+  text-align:center;position:relative;
+  animation:popUp .28s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popUp{
+  from{transform:scale(.84) translateY(16px);opacity:0;}
+  to{transform:scale(1) translateY(0);opacity:1;}
+}
+
+.close-btn{
+  position:absolute;right:12px;top:10px;cursor:pointer;
+  font-size:13px;color:var(--gray-mid);
+  background:var(--gray-soft);border:none;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.close-btn:hover{background:var(--gray-light);}
+
+.modal-title{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--black);
+  margin-bottom:16px;letter-spacing:.2px;
+}
+.modal-sub{
+  font-size:11px;color:var(--gray-mid);
+  margin-bottom:14px;margin-top:-10px;
+}
+
+/* ══ TIME TOGETHER ══ */
+.time-wrap{
+  background:var(--gray-soft);border-radius:16px;
+  padding:20px 14px 22px;position:relative;overflow:hidden;
+}
+
+.hearts-row{
+  display:flex;justify-content:center;
+  gap:10px;align-items:center;margin:4px 0 18px;
+}
+
+.heart-bubble{
+  position:relative;width:100px;height:96px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.heart-bubble svg.heart-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.22));
+}
+.heart-bubble-inner{position:relative;z-index:2;text-align:center;line-height:1;margin-top:-6px;}
+.heart-count{
+  font-size:24px;font-weight:700;color:var(--white);
+  display:block;font-family:'DM Serif Display',serif;
+  text-shadow:0 1px 6px rgba(0,0,0,.25);
+  margin-bottom:3px;
+}
+.heart-label{
+  font-size:9px;font-weight:500;
+  color:rgba(255,255,255,.85);
+  text-transform:uppercase;letter-spacing:.7px;
+  display:block;
+}
+
+.miss-btn{
+  background:var(--black);color:var(--white);
+  border:none;border-radius:30px;
+  padding:10px 28px;
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;font-size:12px;cursor:pointer;
+  letter-spacing:.5px;
+  transition:opacity .15s;
+}
+.miss-btn:hover{opacity:.75;}
+
+.float-specks{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.speck{
+  position:absolute;bottom:-10px;
+  border-radius:50%;background:var(--gray-light);
+  animation:floatSpeck 4s ease-in infinite;opacity:0;
+}
+@keyframes floatSpeck{
+  0%{transform:translateY(0) scale(1);opacity:.6;}
+  100%{transform:translateY(-130px) scale(.2);opacity:0;}
+}
+
+/* ══ LOVE LIST ══ */
+.love-wrap{background:var(--gray-soft);border-radius:16px;padding:18px 14px;}
+
+.love-item{
+  display:flex;align-items:center;gap:10px;
+  background:var(--white);border:1px solid var(--gray-soft);
+  border-radius:12px;padding:11px 14px;
+  margin-bottom:8px;text-align:left;
+  animation:slideIn .38s ease both;
+}
+.love-item:nth-child(1){animation-delay:.04s;}
+.love-item:nth-child(2){animation-delay:.09s;}
+.love-item:nth-child(3){animation-delay:.14s;}
+.love-item:nth-child(4){animation-delay:.19s;}
+.love-item:nth-child(5){animation-delay:.24s;}
+@keyframes slideIn{
+  from{transform:translateX(-12px);opacity:0;}
+  to{transform:translateX(0);opacity:1;}
+}
+
+.love-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--black);color:var(--white);
+  font-weight:700;font-size:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-family:'DM Serif Display',serif;
+}
+.love-text{font-size:12.5px;font-weight:500;color:var(--gray-dark);}
+
+/* ══ PHOTOS ══ */
+.photos-wrap{padding:4px 0;}
+
+.photo-stack{
+  position:relative;width:200px;height:195px;
+  margin:8px auto 16px;
+  cursor:pointer;
+}
+.stack-photo{
+  position:absolute;width:168px;height:168px;
+  border-radius:14px;object-fit:cover;
+  box-shadow:0 5px 18px rgba(0,0,0,.16);
+  border:3px solid var(--white);
+  will-change:transform;
+}
+.photo-hint{font-size:11px;color:var(--gray-mid);}
+
+/* ══ LETTER ══ */
+.letter-wrap{
+  background:var(--gray-soft);border-radius:16px;
+  padding:20px 18px;text-align:left;
+}
+#letterText{
+  white-space:pre-line;font-size:13px;
+  line-height:1.85;color:var(--gray-dark);
+}
+</style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+  <div class="nav">
+    <div>←</div>
+    <h2>1stANNIV</h2>
+    <div>☰</div>
+  </div>
+
+  <div class="profile-header">
+    <div class="profile-pic">
+      <img src="./extra/IMG_9141.jpg" onerror="this.src='https://placecats.com/80/80'">
+    </div>
+    <div class="profile-stats">
+      <div><span>4</span><p>Posts</p></div>
+      <div><span>2.1k</span><p>Followers</p></div>
+      <div><span>25</span><p>Following</p></div>
+    </div>
+  </div>
+
+  <div class="bio">
+    <strong>baby!</strong><br>
+    i love you always<br>
+  </div>
+
+  <div class="buttons">
+    <button>Following</button>
+    <button>Message</button>
+  </div>
+
+  <div class="highlights">
+
+    <div class="highlight" onclick="openModal('time')">
+      <div class="highlight-ring">
+        <img src="./extra/IMG_9144.JPG" onerror="this.src='https://placecats.com/65/65'">
+      </div>
+      <p>time together</p>
+    </div>
+
+    <div class="highlight" onclick="openModal('love')">
+      <div class="highlight-ring">
+        <img src="https://i.pinimg.com/736x/f6/d8/1f/f6d81fd07ef68978fabfd7379ea2c860.jpg">
+      </div>
+      <p>things i love about you</p>
+    </div>
+
+    <div class="highlight" onclick="openModal('photos')">
+      <div class="highlight-ring">
+        <img src="https://i.pinimg.com/1200x/98/a7/7e/98a77e59aada550f3dce194fe96214a8.jpg">
+      </div>
+      <p>family</p>
+    </div>
+
+    <div class="highlight" onclick="openModal('letter')">
+      <div class="highlight-ring">
+        <img src="./extra/IMG_9143.jpg">
+      </div>
+      <p>&lt;3 letter</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="handleOverlay(event)">
+  <div class="modal-content" id="modalContent">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+function openModal(type){
+  document.getElementById("modal").classList.add("active");
+  const body = document.getElementById("modalBody");
+  clearInterval(window._timerInterval);
+  window._zoomedPhoto = null;
+  if(type==="time")   renderTime(body);
+  if(type==="love")   renderLove(body);
+  if(type==="photos") renderPhotos(body);
+  if(type==="letter") renderLetter(body);
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("active");
+  document.getElementById("modalBody").innerHTML="";
+  clearInterval(window._timerInterval);
+}
+
+function handleOverlay(e){
+  if(e.target===document.getElementById("modal")) closeModal();
+}
+
+/* ── TIME ── */
+function renderTime(body){
+  const start = new Date("April 21, 2025 04:00:00");
+  body.innerHTML=`
+  <p class="modal-title">time together</p>
+  <div class="time-wrap">
+    <div class="float-specks" id="specks"></div>
+    <div class="hearts-row">
+      <div class="heart-bubble">
+        <svg class="heart-bg" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#555"/>
+              <stop offset="100%" stop-color="#111"/>
+            </linearGradient>
+          </defs>
+          <path d="M65,105 C65,105 10,70 10,38 C10,20 24,8 42,8 C52,8 60,14 65,20 C70,14 78,8 88,8 C106,8 120,20 120,38 C120,70 65,105 65,105Z" fill="url(#hg1)"/>
+        </svg>
+        <div class="heart-bubble-inner">
+          <span class="heart-count" id="yearCount">0</span>
+          <span class="heart-label">years</span>
+        </div>
+      </div>
+
+      <div class="heart-bubble">
+        <svg class="heart-bg" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#777"/>
+              <stop offset="100%" stop-color="#333"/>
+            </linearGradient>
+          </defs>
+          <path d="M65,105 C65,105 10,70 10,38 C10,20 24,8 42,8 C52,8 60,14 65,20 C70,14 78,8 88,8 C106,8 120,20 120,38 C120,70 65,105 65,105Z" fill="url(#hg2)"/>
+        </svg>
+        <div class="heart-bubble-inner">
+          <span class="heart-count" id="monthCount">0</span>
+          <span class="heart-label">months</span>
+        </div>
+      </div>
+
+      <div class="heart-bubble">
+        <svg class="heart-bg" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#999"/>
+              <stop offset="100%" stop-color="#444"/>
+            </linearGradient>
+          </defs>
+          <path d="M65,105 C65,105 10,70 10,38 C10,20 24,8 42,8 C52,8 60,14 65,20 C70,14 78,8 88,8 C106,8 120,20 120,38 C120,70 65,105 65,105Z" fill="url(#hg3)"/>
+        </svg>
+        <div class="heart-bubble-inner">
+          <span class="heart-count" id="dayCount">0</span>
+          <span class="heart-label">days</span>
+        </div>
+      </div>
+    </div>
+    <button class="miss-btn">♡ &nbsp;Miss You</button>
+  </div>`;
+
+  spawnSpecks();
+  tickTimer(start);
+  window._timerInterval = setInterval(()=>tickTimer(start), 60000);
+}
+
+function tickTimer(start){
+  const diff = new Date() - start;
+  const totalDays = Math.floor(diff / (1000*60*60*24));
+  const years = Math.floor(totalDays / 365);
+  const months = Math.floor(totalDays / 30.44);
+  const y = document.getElementById("yearCount");
+  const m = document.getElementById("monthCount");
+  const d = document.getElementById("dayCount");
+  if(y) y.textContent = years;
+  if(m) m.textContent = months;
+  if(d) d.textContent = totalDays;
+}
+
+function spawnSpecks(){
+  const c = document.getElementById("specks");
+  if(!c) return;
+  for(let i=0;i<14;i++){
+    const s = document.createElement("span");
+    s.className="speck";
+    s.style.left=(Math.random()*92)+"%";
+    s.style.animationDelay=(Math.random()*4)+"s";
+    s.style.animationDuration=(2.5+Math.random()*2)+"s";
+    const size=(3+Math.random()*5)+"px";
+    s.style.width=size;s.style.height=size;
+    c.appendChild(s);
+  }
+}
+
+/* ── LOVE ── */
+function renderLove(body){
+  const things=[
+    {n:"01",text:"Your kindness that never runs out"},
+    {n:"02",text:"The way your smile lights up everything"},
+    {n:"03",text:"How you always know when I need you"},
+    {n:"04",text:"How safe I feel whenever I'm with you"},
+    {n:"05",text:"That I can be fully myself with you"},
+  ];
+  body.innerHTML=`
+  <p class="modal-title">why i love you</p>
+  <div class="love-wrap">
+    ${things.map(t=>`
+      <div class="love-item">
+        <div class="love-num">${t.n}</div>
+        <span class="love-text">${t.text}</span>
+      </div>
+    `).join("")}
+  </div>`;
+}
+
+/* ── PHOTOS ── */
+function renderPhotos(body){
+  const photos=[
+    "./extra/IMG_9141.jpg",
+    "./extra/1.jpeg",
+    "./extra/2.jpeg",
+    "./extra/IMG_9145.jpg",
+    "./extra/IMG_9146.jpg",
+    "./extra/photo_2026-04-20 06.35.58.jpeg",
+  ];
+  body.innerHTML=`
+  <p class="modal-title">our moments</p>
+  <p class="modal-sub">tap to flip through</p>
+  <div class="photos-wrap">
+    <div class="photo-stack" id="photoStack">
+      ${photos.map((src,i)=>`<img class="stack-photo" src="${src}" data-index="${i}" loading="lazy">`).join("")}
+    </div>
+    <p class="photo-hint" id="photoHint">1 / ${photos.length}</p>
+  </div>`;
+  window._photoIndex = photos.length - 1;
+  window._photoTotal = photos.length;
+  window._photoFlipping = false;
+  updateStack();
+  document.getElementById("photoStack").addEventListener("click", advancePhoto);
+}
+
+function updateStack(){
+  const imgs = document.querySelectorAll(".stack-photo");
+  const total = imgs.length;
+  const top = window._photoIndex;
+  const rotations = [-6, 3, -1.5];
+  const tops = [0, 12, 22];
+  const lefts = [0, 16, 30];
+  imgs.forEach((img, i)=>{
+    const dist = (top - i + total) % total;
+    if(dist >= 3){
+      img.style.display = "none";
+    } else {
+      img.style.display = "block";
+      img.style.transform = `rotate(${rotations[dist]}deg)`;
+      img.style.top = tops[dist]+"px";
+      img.style.left = lefts[dist]+"px";
+      img.style.zIndex = String(3 - dist);
+      img.style.opacity = "1";
+      img.style.transition = "";
+    }
+  });
+  const current = total - top;
+  const hint = document.getElementById("photoHint");
+  if(hint) hint.textContent = `${current} / ${total}`;
+}
+
+function advancePhoto(){
+  if(window._photoFlipping) return;
+  window._photoFlipping = true;
+  const imgs = document.querySelectorAll(".stack-photo");
+  const total = imgs.length;
+  const top = window._photoIndex;
+  const topImg = imgs[top];
+  topImg.style.transition = "transform .28s ease, opacity .28s ease";
+  topImg.style.transform = "rotate(18deg) translateX(130px) translateY(-15px)";
+  topImg.style.opacity = "0";
+  setTimeout(()=>{
+    topImg.style.transition = "none";
+    topImg.style.display = "none";
+    window._photoIndex = (top - 1 + total) % total;
+    updateStack();
+    setTimeout(()=>{ window._photoFlipping = false; }, 50);
+  }, 280);
+}
+
+/* ── LETTER ── */
+function renderLetter(body){
+  const text=`Happy 1st Anniversary!
+
+  It's been a year since we started talking. Yet we're still here. One year. Not because everything was perfect. We had moments where magulo lahat, where we didn't understand each other, where it would've been easier to just walk away for good. And for a while, we actually did. But somehow we still found our way back. And I think that says more about us than anything else.
+  
+  Because out of everything, misunderstandings, distance, pride, all the things that could've ended us, we still chose each other again. Not out of habit, not out of convenience, but because something about what we have is worth holding on to.
+  
+  A year with you isn't just about the good days, even though those are my favorite. It's about everything in between din, the quiet moments, the random conversations na we have, the times we tried again even when it wasn't easy. That's what makes this feel real to me. We've seen parts of each other na we don't show easily. And nag stay pa rin tayo. Not because we're perfect, but because we're willing.
+  
+  If there's one thing I'm sure about, it's that I don't want this to just be a milestone. I want it to be something we keep building on, better this time. Thank you for raising baby wo ai ni with me. 
+  
+  Happy 1st anniversary, baby. I love you so much, more than you'll ever know.♡`;
+  body.innerHTML=`
+  <p class="modal-title">a letter for you</p>
+  <div class="letter-wrap">
+    <div id="letterText"></div>
+  </div>`;
+  let i=0;
+  const el=document.getElementById("letterText");
+  (function type(){if(i<text.length){el.innerHTML+=text.charAt(i++);setTimeout(type,38);}})();
+}
+</script>
+
+</body>
+</html>
